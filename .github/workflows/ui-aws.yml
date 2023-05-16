@@ -33,6 +33,7 @@ on:
       - "development/cloud-setup"
     paths: 
       - "ui/**"
+      - ".github/workflows/ui-aws.yml"
   workflow_dispatch:
 
 env:
