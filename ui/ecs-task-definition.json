@@ -1,24 +1,53 @@
 {
-    "family": "imdbclone",
-    "executionRoleArn": "arn:aws:iam::595123720229:role/ecsTaskExecutionRole",
-    "networkMode": "awsvpc",
+    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:595123720229:task-definition/imdb-ui-task-def:1",
     "containerDefinitions": [
         {
-            "name": "imdb-ui",
-            "image": "595123720229.dkr.ecr.eu-central-1.amazonaws.com/imdb-ui:latest",
+            "name": "imdb-ui-container",
+            "image": "595123720229.dkr.ecr.eu-central-1.amazonaws.com/imdb-ui",
+            "cpu": 0,
+            "memoryReservation": 128,
             "portMappings": [
                 {
                     "containerPort": 3000,
-                    "hostPort": 3000,
+                    "hostPort": 0,
                     "protocol": "tcp"
                 }
             ],
-            "essential": true
+            "essential": true,
+            "entryPoint": [],
+            "command": [],
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": []
         }
+    ],
+    "family": "imdb-ui-task-def",
+    "taskRoleArn": "arn:aws:iam::595123720229:role/ecsTaskExecutionRole",
+    "revision": 1,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EXTERNAL",
+        "EC2"
     ],
     "requiresCompatibilities": [
         "EC2"
     ],
     "cpu": "1024",
-    "memory": "1024"
+    "memory": "1024",
+    "registeredAt": "2023-05-19T14:04:28.435Z",
+    "registeredBy": "arn:aws:iam::595123720229:root",
+    "tags": []
 }

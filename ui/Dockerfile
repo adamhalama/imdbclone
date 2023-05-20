@@ -34,6 +34,8 @@ COPY . .
 # Building app
 RUN yarn run build
 
+EXPOSE 3000
+
 # Running the app
 # CMD [ "yarn", "start" ]
 ENTRYPOINT yarn run start

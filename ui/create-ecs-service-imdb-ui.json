@@ -1,0 +1,149 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "The template used to create an ECS Service from the ECS Console.",
+    "Parameters": {
+      "ECSClusterName": {
+        "Type": "String",
+        "Default": "imdb-dev"
+      },
+      "SecurityGroupIDs": {
+        "Type": "CommaDelimitedList",
+        "Default": "sg-003d61270c1e527f7,sg-08d07752040a4a9c5"
+      },
+      "SubnetIDs": {
+        "Type": "CommaDelimitedList",
+        "Default": "subnet-040403f3fc9f546bf,subnet-08bbef2b09d000236,subnet-0d65c7c6b2783d0ba"
+      },
+      "VpcID": {
+        "Type": "String",
+        "Default": "vpc-04d19c3e5105d314b"
+      },
+      "LoadBalancerName": {
+        "Type": "String",
+        "Default": "imdbclone-lb"
+      }
+    },
+    "Resources": {
+      "ECSService": {
+        "Type": "AWS::ECS::Service",
+        "Properties": {
+          "Cluster": "imdb-dev",
+          "TaskDefinition": "arn:aws:ecs:eu-central-1:595123720229:task-definition/imdbclone:8",
+          "ServiceName": "imdb-ui-ecs",
+          "SchedulingStrategy": "REPLICA",
+          "DesiredCount": 1,
+          "LoadBalancers": [
+            {
+              "ContainerName": "imdb-ui",
+              "ContainerPort": 3000,
+              "TargetGroupArn": {
+                "Ref": "TargetGroup"
+              }
+            }
+          ],          
+          "HealthCheckGracePeriodSeconds": "10",
+          "NetworkConfiguration": {
+            "AwsvpcConfiguration": {
+              "SecurityGroups": {
+                "Ref": "SecurityGroupIDs"
+              },
+              "Subnets": {
+                "Ref": "SubnetIDs"
+              }
+            }
+          },
+          "DeploymentConfiguration": {
+            "MaximumPercent": 200,
+            "MinimumHealthyPercent": 100,
+            "DeploymentCircuitBreaker": {
+              "Enable": true,
+              "Rollback": true
+            }
+          },
+          "DeploymentController": {
+            "Type": "ECS"
+          },
+          "ServiceConnectConfiguration": {
+            "Enabled": false
+          },
+          "PlacementStrategies": [
+            {
+              "Field": "attribute:ecs.availability-zone",
+              "Type": "spread"
+            },
+            {
+              "Field": "instanceId",
+              "Type": "spread"
+            }
+          ],
+          "PlacementConstraints": [],
+          "Tags": [],
+          "EnableECSManagedTags": true
+        },
+        "DependsOn": [
+          "ListenerRule"
+        ]
+      },
+      "TargetGroup": {
+        "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+        "Properties": {
+          "HealthCheckPath": "/",
+          "Name": "imdb-ui-ecs-tg",
+          "Port": 80,
+          "Protocol": "HTTP",
+          "TargetType": "ip",
+          "HealthCheckProtocol": "HTTP",
+          "VpcId": "vpc-04d19c3e5105d314b"
+        }
+      },
+      "ListenerRule": {
+        "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
+        "Properties": {
+          "Actions": [
+            {
+              "Type": "forward",
+              "TargetGroupArn": {
+                "Ref": "TargetGroup"
+              }
+            }
+          ],
+          "Conditions": [
+            {
+              "Field": "path-pattern",
+              "Values": [
+                "/"
+              ]
+            }
+          ],
+          "ListenerArn": "arn:aws:elasticloadbalancing:eu-central-1:595123720229:listener/app/imdbclone-lb/afb6d4ed656f12f2/50bee5e0679952ce",
+          "Priority": "1"
+        }
+      }
+    },
+    "Outputs": {
+      "ClusterName": {
+        "Description": "The cluster used to create the service.",
+        "Value": {
+          "Ref": "ECSClusterName"
+        }
+      },
+      "ECSService": {
+        "Description": "The created service.",
+        "Value": {
+          "Ref": "ECSService"
+        }
+      },
+      "TargetGroup": {
+        "Description": "The created target group.",
+        "Value": {
+          "Ref": "TargetGroup"
+        }
+      },
+      "ListenerRule": {
+        "Description": "The created listener rule.",
+        "Value": {
+          "Ref": "ListenerRule"
+        }
+      }
+    }
+  }
