@@ -67,6 +67,7 @@ jobs:
       run: yarn build
 
   deploy:
+    needs: build
     name: Deploy API
     runs-on: ubuntu-latest
     environment: production
