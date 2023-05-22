@@ -53,6 +53,7 @@ jobs:
   build:
     name: Transpile
     runs-on: ubuntu-latest
+    working-directory: api
 
     steps:
     - uses: actions/checkout@v3
@@ -70,6 +71,7 @@ jobs:
     needs: build
     name: Deploy API
     runs-on: ubuntu-latest
+    working-directory: api
     environment: production
 
     steps:
@@ -96,7 +98,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./api
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
