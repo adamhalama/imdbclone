@@ -1,7 +1,6 @@
 **Local database setup** <br/>
-The service relies on a MySQL database. To avoid having to deal with issues arising from developers
-working on different operating systems we develop locally using a MySQL instance running in a Docker container.
-The database instance on AWS RDS in staging and production is hosted on a type of Unix-system which
+The service relies on a MySQL database.
+The database instance on AWS RDS is hosted on a type of Unix-system which
 handles casing and comparison of table names differently than both macOS and Windows.
 
 Running the database in a Docker image gets us closer to how the instance runs in RDS.
