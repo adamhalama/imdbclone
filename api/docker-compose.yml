@@ -1,0 +1,21 @@
+version: '3.4'
+
+x-environment: &environment
+  MYSQL_DATABASE: imdb-clone
+  MYSQL_USER: user
+  MYSQL_PASSWORD: password
+  MYSQL_ROOT_PASSWORD: password
+
+services:
+  mysql:
+    platform: linux/amd64
+
+    container_name: imdb-clone_db
+    image: mysql:5.7
+    restart: always
+    environment: *environment
+    ports:
+      - 3306:3306
+    expose:
+     - 3306
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
