@@ -21,7 +21,7 @@
   "scripts": {
     "build": "rm -rf ./dist && tsc --project ./",
     "dev": "nodemon --config nodemon.json",
-    "prod": "yarn prisma generate && node dist/app.js"
+    "prod": "node dist/app.js"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
