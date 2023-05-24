@@ -1,53 +1,86 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:595123720229:task-definition/imdb-ui-task-def:1",
+    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:595123720229:task-definition/imdb-ui-task-def:2",
     "containerDefinitions": [
         {
             "name": "imdb-ui-container",
-            "image": "595123720229.dkr.ecr.eu-central-1.amazonaws.com/imdb-ui",
+            "image": "595123720229.dkr.ecr.eu-central-1.amazonaws.com/imdb-ui:latest",
             "cpu": 0,
-            "memoryReservation": 128,
             "portMappings": [
                 {
+                    "name": "imdb-ui-container-3000-tcp",
                     "containerPort": 3000,
-                    "hostPort": 0,
-                    "protocol": "tcp"
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
                 }
             ],
             "essential": true,
-            "entryPoint": [],
-            "command": [],
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
-            "volumesFrom": []
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "imdb-api-container",
+                    "awslogs-region": "eu-central-1",
+                    "awslogs-stream-prefix": "imdb-api"
+                }
+            }
         }
     ],
     "family": "imdb-ui-task-def",
     "taskRoleArn": "arn:aws:iam::595123720229:role/ecsTaskExecutionRole",
-    "revision": 1,
+    "executionRoleArn": "arn:aws:iam::595123720229:role/ecsTaskExecutionRole",
+    "networkMode": "host",
+    "revision": 2,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
         {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role-network-host"
+        },
+        {
             "name": "com.amazonaws.ecs.capability.ecr-auth"
         },
         {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
         },
         {
             "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
         }
     ],
     "placementConstraints": [],
     "compatibilities": [
-        "EXTERNAL",
         "EC2"
     ],
     "requiresCompatibilities": [
         "EC2"
     ],
-    "cpu": "1024",
-    "memory": "1024",
-    "registeredAt": "2023-05-19T14:04:28.435Z",
+    "cpu": "512",
+    "memory": "512",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2023-05-24T17:04:42.588Z",
     "registeredBy": "arn:aws:iam::595123720229:root",
     "tags": []
 }

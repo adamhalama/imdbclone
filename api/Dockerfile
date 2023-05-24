@@ -10,7 +10,6 @@ COPY prisma/migrations ./prisma/migrations
 COPY prisma/schema.prisma ./prisma/schema.prisma
 COPY dist ./dist
 
-
 ARG AUTH_API_KEY
 ARG SECRET_KEY
 ARG DATABASE_URL
@@ -18,8 +17,6 @@ ARG DATABASE_URL
 ENV AUTH_API_KEY=$AUTH_API_KEY
 ENV SECRET_KEY=$SECRET_KEY
 ENV DATABASE_URL=$DATABASE_URL
-
-RUN echo ${DATABASE_URL}
 
 ENV PORT=5001
 
