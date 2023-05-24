@@ -19,9 +19,9 @@
     "prisma": "^4.13.0"
   },
   "scripts": {
-    "build": "tsc --project ./",
+    "build": "rm -rf ./dist && tsc --project ./",
     "dev": "nodemon --config nodemon.json",
-    "prod": "yarn prisma generate && node dist/api/src/app.js"
+    "prod": "yarn prisma generate && node dist/app.js"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",

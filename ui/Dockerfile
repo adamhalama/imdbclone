@@ -1,41 +1,16 @@
-# WORKDIR /app
-
-# # Root
-# COPY node_modules ./node_modules
-# COPY package.json ./package.json
-# COPY yarn.lock ./yarn.lock
-# COPY database/migrate.ts ./database/migrate.ts
-# COPY prisma/migrations ./prisma/migrations
-# COPY prisma/schema.prisma ./prisma/schema.prisma
-# COPY dist ./dist
-
-# EXPOSE 3000
-
-# #TO change
-# #ENTRYPOINT yarn run start:api
-
-# ENTRYPOINT yarn run dev
-
-
-#######
-
-FROM node:16
-
-# Setting working directory. All the path will be relative to WORKDIR
+# Stage 1: Build the React app
+FROM --platform=linux/amd64 node:16 as build
 WORKDIR /usr/src/app
-
-# Installing dependencies
-COPY package*.json ./
+COPY package.json yarn.lock ./
 RUN yarn install
-
-# Copying source files
 COPY . .
+RUN yarn build
 
-# Building app
-RUN yarn run build
+# Stage 2: Serve the React app using serve
+FROM --platform=linux/amd64 node:16 as runtime
+WORKDIR /usr/src/app
+COPY --from=build /usr/src/app/build ./build
+RUN yarn global add serve
 
 EXPOSE 3000
-
-# Running the app
-# CMD [ "yarn", "start" ]
-ENTRYPOINT yarn run start
+CMD ["serve", "-s", "build", "-l", "3000"]
