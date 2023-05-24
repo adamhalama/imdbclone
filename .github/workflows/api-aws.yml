@@ -121,7 +121,7 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         docker build \
-            --build-arg API_AUTH_KEY=$API_AUTH_KEY \
+            --build-arg AUTH_API_KEY=$AUTH_API_KEY \
             --build-arg SECRET_KEY=$SECRET_KEY \
             --build-arg DATABASE_URL=$DATABASE_URL \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
