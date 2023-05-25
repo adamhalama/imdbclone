@@ -97,6 +97,7 @@ jobs:
         REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}
         REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
       run: |
+        echo $REACT_APP_SERVICE_URL
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
