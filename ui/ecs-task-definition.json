@@ -24,9 +24,9 @@
                 "logDriver": "awslogs",
                 "options": {
                     "awslogs-create-group": "true",
-                    "awslogs-group": "imdb-api-container",
+                    "awslogs-group": "imdb-ui-container",
                     "awslogs-region": "eu-central-1",
-                    "awslogs-stream-prefix": "imdb-api"
+                    "awslogs-stream-prefix": "imdb-ui"
                 }
             }
         }

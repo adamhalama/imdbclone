@@ -50,9 +50,12 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  deploy:
+
+# BUILD:
     name: Transpile
     runs-on: ubuntu-latest
+    environment: production
 
     defaults:
         run:
@@ -71,74 +74,52 @@ jobs:
     - name: Create optimized production build
       run: yarn build
 
-    - name: Upload working directory
-      uses: bissolli/gh-action-persist-workspace@v1
+# DEPLOY:
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        action: persist
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
 
-  deploy:
-    needs: build
-    name: Deploy
-    runs-on: ubuntu-latest
-    environment: production
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
 
-    defaults:
-      run:
-        working-directory: ./ui
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+        REACT_APP_SERVICE_URL: ${{ env.REACT_APP_SERVICE_URL }}
+        REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}
+        REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build \
+          --build-arg REACT_APP_SERVICE_URL=$REACT_APP_SERVICE_URL \
+          --build-arg REACT_APP_AUTH_API_KEY=$REACT_APP_AUTH_API_KEY \
+          --build-arg REACT_APP_TMDB_API_KEY=$REACT_APP_TMDB_API_KEY \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: Download working directory
-        uses: bissolli/gh-action-persist-workspace@v1
-        with:
-          action: retrieve
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: ${{ env.CONTAINER_NAME }}
+        image: ${{ steps.build-image.outputs.image }}
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: latest
-
-          REACT_APP_SERVICE_URL: ${{ env.REACT_APP_SERVICE_URL }}
-          REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}
-          REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
-        run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
-          docker build \
-            --build-arg REACT_APP_SERVICE_URL=$REACT_APP_SERVICE_URL \
-            --build-arg REACT_APP_AUTH_API_KEY=$REACT_APP_AUTH_API_KEY \
-            --build-arg REACT_APP_TMDB_API_KEY=$REACT_APP_TMDB_API_KEY \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: ${{ env.ECS_SERVICE }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true

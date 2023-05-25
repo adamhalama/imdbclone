@@ -50,9 +50,13 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  deploy:
+
+# BUILD:
+
     name: Transpile
     runs-on: ubuntu-latest
+    environment: production
 
     defaults:
         run:
@@ -70,30 +74,7 @@ jobs:
     - name: Transpile/build
       run: yarn build
 
-    - name: Upload working directory
-      uses: bissolli/gh-action-persist-workspace@v1
-      with:
-        action: persist
-
-
-  deploy:
-    needs: build
-    name: Deploy API
-    runs-on: ubuntu-latest
-    environment: production
-
-    defaults:
-        run:
-          working-directory: ./api
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Download working directory
-      uses: bissolli/gh-action-persist-workspace@v1
-      with:
-        action: retrieve
+# DEPLOY:
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
