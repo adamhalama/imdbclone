@@ -52,6 +52,32 @@ permissions:
   contents: read
 
 jobs:
+  build:
+    name: Transpile
+    runs-on: ubuntu-latest
+
+    defaults:
+        run:
+          working-directory: ./api
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with: 
+        node-version: '16.x'
+        cache: 'yarn'
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Transpile/build
+      run: yarn build
+
+    - name: Upload working directory
+      uses: bissolli/gh-action-persist-workspace@v1
+      with:
+        action: persist
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -64,6 +90,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Download working directory
+        uses: bissolli/gh-action-persist-workspace@v1
+        with:
+          action: retrieve
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

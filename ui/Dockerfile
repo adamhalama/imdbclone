@@ -1,15 +1,13 @@
-# Stage 1: Build the React app
-FROM --platform=linux/amd64 node:16 as build
-WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN yarn install
-COPY . .
-RUN yarn build
-
 # Stage 2: Serve the React app using serve
 FROM --platform=linux/amd64 node:16 as runtime
 WORKDIR /usr/src/app
-COPY --from=build /usr/src/app/build ./build
+
+# Root
+COPY ./package.json ./package.json
+COPY ./build ./build
+COPY ./yarn.lock ./yarn.lock
+COPY ./node_modules ./node_modules
+
 RUN yarn global add serve
 
 ARG REACT_APP_SERVICE_URL
