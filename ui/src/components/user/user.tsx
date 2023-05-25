@@ -49,6 +49,7 @@ const User = () => {
                 navigate('/')
                 notify('Account deleted successfully.', 'success')
             } catch (e) {
+                console.log(e)
                 notify('An unexpected error occurred.', 'error')
             }
         }
@@ -65,6 +66,7 @@ const User = () => {
                 notify('Friend added successfully', 'success')
                 setUser({ ...user, friends: data })
             } catch (e) {
+                console.log(e)
                 notify('An unexpected error occurred', 'error')
             }
         }
@@ -80,7 +82,8 @@ const User = () => {
                 notify('Password changed successfully, please sign in again.')
                 setUser({ loggedIn: false })
                 navigate('/login')
-            } catch {
+            } catch (e) {
+                console.log(e)
                 notify('An unexpected error occurred', 'error')
             }
         }
@@ -95,7 +98,8 @@ const User = () => {
                 notify('Username changed successfully, please sign in again.')
                 setUser({ loggedIn: false })
                 navigate('/login')
-            } catch {
+            } catch (e) {
+                console.log(e)
                 notify('An unexpected error occurred', 'error')
             }
         }

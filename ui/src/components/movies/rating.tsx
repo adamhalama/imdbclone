@@ -46,6 +46,7 @@ const Rating = ({ movieId }: Props) => {
             updateRating(points)
             notify('Rating successful', 'success')
         } catch (e) {
+            console.log(e)
             notify('An unexpected error occurred', 'error')
         }
     }

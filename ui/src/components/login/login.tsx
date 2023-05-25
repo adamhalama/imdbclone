@@ -34,6 +34,7 @@ const Login = () => {
             setUser({ loggedIn: true, username, email, token, toplist, friends })
             navigate('/account')
         } catch (e) {
+            console.log(e)
             notify('An unexpected error occurred', 'error')
         }
     }
