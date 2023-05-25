@@ -63,7 +63,7 @@ const Comments = ({ movieId, comments }: Props) => {
         </Column>
         }
          
-        { comments.map(comment => <Comment comment={comment} />) }
+        { comments.map((comment, index) => <Comment key={index} comment={comment} />) }
     </Container>
 }
 

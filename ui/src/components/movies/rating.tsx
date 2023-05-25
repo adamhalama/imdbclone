@@ -52,7 +52,7 @@ const Rating = ({ movieId }: Props) => {
 
     return <Row>
     {
-        points.map(point => <Button onClick={async () => await handleRating(point)} label={`${point}`} />)
+        points.map(point => <Button key={point} onClick={async () => await handleRating(point)} label={`${point}`} />)
     }
     </Row>
 }
