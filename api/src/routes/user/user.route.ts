@@ -8,10 +8,10 @@ import { HTTP_STATUS_CODES } from "../../types";
 const PATH = 'user'
 
 const login = async (req: Request, res: Response) => {
-   const { email, password } = req.body
-   const error = validate.login(email)
-   if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
-   await safeQuery(async () => {
+    await safeQuery(async () => {
+       const { email, password } = req.body
+       const error = validate.login(email)
+       if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         const user = await repo.login(email, password)
         if (user) return res.status(HTTP_STATUS_CODES.OK).json({ data: { 
             username: user.username, 
@@ -25,8 +25,8 @@ const login = async (req: Request, res: Response) => {
 }
 
 const register = async (req: Request, res: Response) => {
-    const { username, email, password, confirmPassword } = req.body
     await safeQuery(async () => {
+        const { username, email, password, confirmPassword } = req.body
         const error = validate.register(username, email, password, confirmPassword)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         const { error: dbError } = await repo.register(email, username, password)
@@ -36,8 +36,8 @@ const register = async (req: Request, res: Response) => {
 }
     
 const addFriend = async (req: Request, res: Response) => {
-    const { adder, added } = req.body
     await safeQuery(async () => {
+        const { adder, added } = req.body
         const error = validate.friends(adder, added)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         const result = await repo.addFriend(adder, added)
@@ -47,8 +47,8 @@ const addFriend = async (req: Request, res: Response) => {
 }
 
 const removeFriend = async (req: Request, res: Response) => {
-    const { remover, removed } = req.body
     await safeQuery(async () => {
+        const { remover, removed } = req.body
         const error = validate.friends(remover, removed)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         const result = await repo.removeFriend(remover, removed)
@@ -58,8 +58,8 @@ const removeFriend = async (req: Request, res: Response) => {
 }
 
 const deleteAccount = async (req: Request, res: Response) => {
-    const { email } = req.body
     await safeQuery(async () => {
+        const { email } = req.body
         const error = validate.deleteAccount(email)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         await repo.deleteAccount(email)
@@ -68,8 +68,8 @@ const deleteAccount = async (req: Request, res: Response) => {
 }
 
 const changePassword = async (req: Request, res: Response) => {
-    const { email, currentPassword, newPassword, confirmNewPassword } = req.body
     await safeQuery(async () => {
+        const { email, currentPassword, newPassword, confirmNewPassword } = req.body
         const error = validate.changePassword(email, currentPassword, newPassword, confirmNewPassword)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         const { error: dbError } = await repo.changePassword(email, currentPassword, newPassword)
@@ -79,8 +79,8 @@ const changePassword = async (req: Request, res: Response) => {
 }
 
 const changeUsername = async (req: Request, res: Response) => {
-    const { email, username } = req.body
     await safeQuery(async () => {
+        const { email, username } = req.body
         const error = validate.changeUsername(email, username)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         const { error: dbError } = await repo.changeUsername(email, username)

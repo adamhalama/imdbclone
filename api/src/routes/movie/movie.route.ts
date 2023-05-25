@@ -13,8 +13,8 @@ const all = async (req: Request, res: Response) => {
 }
 
 const comment = async (req: Request, res: Response) => {
-    const { text, username, date, movieId } = req.body
     await safeQuery(async () => {
+        const { text, username, date, movieId } = req.body
         const error = validate.comment(text, date)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         await repo.comment(text, username, date, movieId)
@@ -23,9 +23,8 @@ const comment = async (req: Request, res: Response) => {
 }
 
 const rating = async (req: Request, res: Response) => {
-    const { points, username, movieId } = req.body
-    console.log(points, username, movieId)
     await safeQuery(async () => {
+        const { points, username, movieId } = req.body
         const error = validate.rating(points)
         if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
         const result = await repo.rating(points, username, movieId)
