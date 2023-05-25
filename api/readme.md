@@ -11,7 +11,7 @@ To launch the app: <br />
 `yarn dev`
 
 To launch the tests: <br />
-`yarn start`
+`yarn test`
 
 **Local database setup** <br/>
 The service relies on a MySQL database.
