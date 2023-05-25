@@ -34,7 +34,8 @@ const FriendComponent = ({ username, toplist }: Props) => {
             }
             notify("Friend removed successfully", 'success')
             setUser({ ...user, friends: data })
-        } catch {
+        } catch (e) {
+            console.log(e)
             notify('An unexpected error occurred', 'error')
         }
         
