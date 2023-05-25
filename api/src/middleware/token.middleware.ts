@@ -9,7 +9,7 @@ const AUTH_API_KEY = process.env.AUTH_API_KEY
 
 export default async (req: Request, res: Response, next: NextFunction) => {
     await safeQuery (async () => {
-        if (!AUTH_API_KEY) return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({ data: "Missing API Key", error: ERRORS.INTERNAL_SERVER_ERROR })
+        if (!AUTH_API_KEY) return res.status(HTTP_STATUS_CODES.UNAUTHORIZED).json({ data: null, error: "Missing API Key" })
         const token = req.header('Authorization')
         if (!token || token !== AUTH_API_KEY) return res.status(HTTP_STATUS_CODES.UNAUTHORIZED).json({ data: null, error: ERRORS.INVALID_TOKEN })
         next()
