@@ -78,7 +78,7 @@ jobs:
 
     - name: Print $REACT_APP_SERVICE_URL
       env: 
-        REACT_APP_SERVICE_URL: ${{ env.REACT_APP_SERVICE_URL }}
+        REACT_APP_SERVICE_URL: ${{ vars.REACT_APP_SERVICE_URL }}
       run: echo $REACT_APP_SERVICE_URL
 
     - name: Configure AWS credentials
@@ -98,7 +98,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: latest
 
-        REACT_APP_SERVICE_URL: ${{ env.REACT_APP_SERVICE_URL }}
+        REACT_APP_SERVICE_URL: ${{ vars.REACT_APP_SERVICE_URL }}
         REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}
         REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
       run: |
