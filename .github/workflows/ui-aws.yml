@@ -97,7 +97,6 @@ jobs:
         REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}
         REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
       run: |
-        echo $REACT_APP_SERVICE_URL
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
@@ -108,6 +107,10 @@ jobs:
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+
+    - name: Print $REACT_APP_SERVICE_URL
+      run: echo $REACT_APP_SERVICE_URL
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
