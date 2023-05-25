@@ -15,7 +15,7 @@ const Movies = () => {
         { loading ? <span>Loading</span> : 
         <MovieContainer>
             {
-            movies.map(({ id, name }) => <div onClick={() => navigate(`/movie/${id}`)}>{name}</div>)
+            movies.map(({ id, name }) => <div key={id} onClick={() => navigate(`/movie/${id}`)}>{name}</div>)
             }
         </MovieContainer>
         }

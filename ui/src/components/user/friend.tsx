@@ -6,6 +6,7 @@ import { Row } from "../../styled/flex"
 import { UserContext } from "./user.context"
 import useRemoveFriend from "./use-remove-friend"
 import useNotify from "../notification/use-notify"
+import logger from "../../logging/logger"
 
 
 type Props = {
@@ -35,7 +36,8 @@ const FriendComponent = ({ username, toplist }: Props) => {
             notify("Friend removed successfully", 'success')
             setUser({ ...user, friends: data })
         } catch (e) {
-            notify('An unexpected error occurred', 'error'); console.log(e);
+            logger(e)
+            notify('An unexpected error occurred', 'error')
         }
         
     }

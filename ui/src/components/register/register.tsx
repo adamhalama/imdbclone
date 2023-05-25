@@ -9,6 +9,7 @@ import useRegister from "./use-register";
 import useNotify from "../notification/use-notify";
 import { useNavigate } from "react-router-dom";
 import User from "../user/user";
+import logger from "../../logging/logger";
 
 const Register = () => {
     
@@ -34,7 +35,8 @@ const Register = () => {
         notify('Registration successful, you can now sign in.', 'success')
         navigate('/login')
         } catch (e) {
-            notify('An unexpected error occurred', 'error'); console.log(e);
+            logger(e)
+            notify('An unexpected error occurred', 'error')
         }
     }
     

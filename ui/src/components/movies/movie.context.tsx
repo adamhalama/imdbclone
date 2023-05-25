@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import useNotify from '../notification/use-notify';
 import { Movie } from '../../types';
 import { instance } from '../../axios.config';
+import logger from '../../logging/logger';
 
 export type MoviesContextState = {
   movies: Movie[];
@@ -45,7 +46,8 @@ const MoviesContainer = ({ children }: Props) => {
         setMovies(data ?? [])
     })
     .catch((e) => {
-      notify('An unexpected error occurred', 'error'); console.log(e);;
+      logger(e)
+      notify('An unexpected error occurred', 'error'); 
     })
     
    }

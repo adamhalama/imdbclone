@@ -1,4 +1,5 @@
 import client from "../src/repository/client/client"
+import log from '../src/logging/log'
 
 const getActorCreate = (names: string[]) => ({ create: names.map(name => ({ name })) })
 
@@ -124,7 +125,7 @@ const seed = async () => {
     try {
         await createMovies()
     } catch (e) {
-        console.log(e)
+        log(e, 'error')
     } finally {
         await client.$disconnect()
     }

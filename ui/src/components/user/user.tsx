@@ -12,6 +12,7 @@ import Input from "../inputs/input";
 import useAddFriend from "./use-add-friend";
 import useChangePassword from "./use-change-password";
 import useChangeUsername from "./use-change-username";
+import logger from "../../logging/logger";
 
 const User = () => {
     const [user, setUser] = useContext(UserContext)
@@ -60,12 +61,12 @@ const User = () => {
                     notify(error, 'error')
                     return
                 }
-                console.log(data, error)
                 if (!data) notify('An unexpected error occurred', 'error');
                 notify('Friend added successfully', 'success')
                 setUser({ ...user, friends: data })
             } catch (e) {
-                notify('An unexpected error occurred', 'error'); console.log(e);
+                logger(e)
+                notify('An unexpected error occurred', 'error')
             }
         }
 
@@ -81,7 +82,8 @@ const User = () => {
                 setUser({ loggedIn: false })
                 navigate('/login')
             } catch (e) {
-                notify('An unexpected error occurred', 'error'); console.log(e);
+                logger(e)
+                notify('An unexpected error occurred', 'error')
             }
         }
 
@@ -96,7 +98,8 @@ const User = () => {
                 setUser({ loggedIn: false })
                 navigate('/login')
             } catch (e) {
-                notify('An unexpected error occurred', 'error'); console.log(e);
+                logger(e)
+                notify('An unexpected error occurred', 'error')
             }
         }
 

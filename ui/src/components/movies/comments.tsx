@@ -11,6 +11,7 @@ import Comment from './comment'
 import Input from '../inputs/input'
 import getValue from '../inputs/getValue'
 import Button from '../inputs/button'
+import logger from '../../logging/logger'
 
 type Props = {
     movieId: number
@@ -51,7 +52,8 @@ const Comments = ({ movieId, comments }: Props) => {
         updateComments(text, username, now)
         notify('Comment successful', 'success')
         } catch (e) {
-            notify('An unexpected error occurred', 'error'); console.log(e);
+            logger(e);
+            notify('An unexpected error occurred', 'error');
         }
     }
     return <Container>

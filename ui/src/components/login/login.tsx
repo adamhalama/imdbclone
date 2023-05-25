@@ -8,6 +8,7 @@ import { UserContext } from "../user/user.context";
 import useLogin from "./use-login";
 import useNotify from "../notification/use-notify";
 import { useNavigate } from "react-router-dom";
+import logger from "../../logging/logger";
 
 const Login = () => {
 
@@ -34,8 +35,8 @@ const Login = () => {
             setUser({ loggedIn: true, username, email, token, toplist, friends })
             navigate('/account')
         } catch (e) {
-            console.log(e)
-            notify('An unexpected error occurred', 'error'); console.log(e);
+            logger(e)
+            notify('An unexpected error occurred', 'error')
         }
     }
 

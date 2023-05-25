@@ -6,6 +6,7 @@ import { UserContext } from '../user/user.context'
 import { Row } from '../../styled/flex'
 import useMovies from './use-movies'
 import { useNavigate } from 'react-router-dom'
+import logger from '../../logging/logger'
 
 type Props = {
     movieId: number
@@ -46,7 +47,8 @@ const Rating = ({ movieId }: Props) => {
             updateRating(points)
             notify('Rating successful', 'success')
         } catch (e) {
-            notify('An unexpected error occurred', 'error'); console.log(e);
+            logger(e)
+            notify('An unexpected error occurred', 'error')
         }
     }
 
