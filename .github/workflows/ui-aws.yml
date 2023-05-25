@@ -76,6 +76,11 @@ jobs:
 
 # DEPLOY:
 
+    - name: Print $REACT_APP_SERVICE_URL
+      env: 
+        REACT_APP_SERVICE_URL: ${{ env.REACT_APP_SERVICE_URL }}
+      run: echo $REACT_APP_SERVICE_URL
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -107,12 +112,6 @@ jobs:
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-
-    - name: Print $REACT_APP_SERVICE_URL
-      env: 
-        REACT_APP_SERVICE_URL: ${{ env.REACT_APP_SERVICE_URL }}
-      run: echo $REACT_APP_SERVICE_URL
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
