@@ -110,6 +110,8 @@ jobs:
 
 
     - name: Print $REACT_APP_SERVICE_URL
+      env: 
+        REACT_APP_SERVICE_URL: ${{ env.REACT_APP_SERVICE_URL }}
       run: echo $REACT_APP_SERVICE_URL
 
     - name: Fill in the new image ID in the Amazon ECS task definition
