@@ -29,14 +29,13 @@ const FriendComponent = ({ username, toplist }: Props) => {
                 return
             }
             if (!data) {
-                notify('An unexpected error occurred', 'error')
+                notify('An unexpected error occurred', 'error');
                 return
             }
             notify("Friend removed successfully", 'success')
             setUser({ ...user, friends: data })
         } catch (e) {
-            console.log(e)
-            notify('An unexpected error occurred', 'error')
+            notify('An unexpected error occurred', 'error'); console.log(e);
         }
         
     }

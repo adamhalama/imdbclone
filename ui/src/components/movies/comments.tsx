@@ -51,8 +51,7 @@ const Comments = ({ movieId, comments }: Props) => {
         updateComments(text, username, now)
         notify('Comment successful', 'success')
         } catch (e) {
-            console.log(e)
-            notify('An unexpected error occurred', 'error')
+            notify('An unexpected error occurred', 'error'); console.log(e);
         }
     }
     return <Container>

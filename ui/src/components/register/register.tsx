@@ -34,8 +34,7 @@ const Register = () => {
         notify('Registration successful, you can now sign in.', 'success')
         navigate('/login')
         } catch (e) {
-            console.log(e)
-            notify('An unexpected error occurred', 'error')
+            notify('An unexpected error occurred', 'error'); console.log(e);
         }
     }
     

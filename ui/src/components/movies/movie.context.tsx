@@ -45,8 +45,7 @@ const MoviesContainer = ({ children }: Props) => {
         setMovies(data ?? [])
     })
     .catch((e) => {
-      console.log(e)
-      notify('An unexpected error occurred', 'error');
+      notify('An unexpected error occurred', 'error'); console.log(e);;
     })
     
    }
