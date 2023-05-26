@@ -95,7 +95,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: latest
+        IMAGE_TAG: ${{ github.sha }}
 
         REACT_APP_SERVICE_URL: ${{ vars.REACT_APP_SERVICE_URL }}
         REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}

@@ -71,6 +71,8 @@ jobs:
         cache: 'yarn'
     - name: Install dependencies
       run: yarn install --frozen-lockfile
+    - name: Test
+      run: yarn test
     - name: Transpile/build
       run: yarn build
 
