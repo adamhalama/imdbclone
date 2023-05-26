@@ -41,13 +41,15 @@ const FriendComponent = ({ username, toplist }: Props) => {
         }
         
     }
-
+    console.log(toplist)
     return <>
     <Modal 
         open={open}
         setOpen={setOpen}
         title="Toplist"
-        children={<></>}
+        children={
+            toplist.map(({ id, name }) => <span key={id}>{name}</span>)
+        }
     />
     <Row>
         <Button label={username} onClick={() => setOpen(true)}/>

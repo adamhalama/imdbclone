@@ -8,7 +8,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         const auth = req.header('ensure-auth')
         if (!auth) return res.status(HTTP_STATUS_CODES.UNAUTHORIZED).json({ data: null, error: 'Authentication not successful' })
         const [token, email] = auth.split(' ')
-        if (!email || !token) if (!auth) return res.status(HTTP_STATUS_CODES.UNAUTHORIZED).json({ data: null, error: 'Authentication not successful' })
+        if (!email || !token) return res.status(HTTP_STATUS_CODES.UNAUTHORIZED).json({ data: null, error: 'Authentication not successful' })
         const user = await client.user.findFirst({
             where: {
                 email,
@@ -16,6 +16,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
             }
         })
         if (!user) return res.status(HTTP_STATUS_CODES.UNAUTHORIZED).json({ data: null, error: 'Authentication not successful' })
+        next()
     }, res, 'ensure-auth')
-    next()
 }

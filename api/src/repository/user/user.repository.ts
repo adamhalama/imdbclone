@@ -163,5 +163,29 @@ export const changeUsername = async (email: string, username: string): Promise<{
     return { error: null }
 }    
 
+export const toplist = async (email: string, movieId: number): Promise<{ error: string | null }> => {
+    const user = await client.user.findFirst({
+        where: {
+            email
+        },
+        include: {
+            toplist: true
+        }
+    })
+    if (!user) return { error: "User does not exist" }
+    const result = await client.user.update({
+        where: {
+            email
+        },
+        data: {
+            toplist: user.toplist.some(({ id }) => id === movieId) ? { disconnect: { id: movieId } } : { connect: { id: movieId } }
+        },
+        include: {
+            toplist: true
+        }
+    })
+    return { error: null }
+}
+
 
 export const mapFriends = (friends: UserWithToplist[]) => friends.map(({ username, toplist }) => ({ username, toplist }))

@@ -89,6 +89,17 @@ const changeUsername = async (req: Request, res: Response) => {
     }, res, `${PATH}/username`)
 }
 
+const toplist = async (req: Request, res: Response) => {
+    await safeQuery(async () => {
+        const { email, movieId } = req.body
+        const error = validate.toplist(email)  
+        if (error) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error })
+        const { error: dbError } = await repo.toplist(email, parseInt(movieId))
+        if (dbError) return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json({ data: null, error: dbError })
+        return res.status(HTTP_STATUS_CODES.OK).json({ data: null, error: null })
+    }, res, `${PATH}/toplist`)
+}
+
 export const userRouter = Router()
 
 userRouter.post('/login', login)
@@ -97,4 +108,5 @@ userRouter.put('/friend/add', (req, res, next) => ensureAuthenticatedMiddleware(
 userRouter.put('/friend/remove',(req, res, next) => ensureAuthenticatedMiddleware(req, res, next), removeFriend)
 userRouter.put('/username',(req, res, next) => ensureAuthenticatedMiddleware(req, res, next), changeUsername)
 userRouter.put('/password',(req, res, next) => ensureAuthenticatedMiddleware(req, res, next), changePassword)
+userRouter.put('/toplist', (req, res, next) => ensureAuthenticatedMiddleware(req, res, next), toplist)
 userRouter.delete('/', (req, res, next) => ensureAuthenticatedMiddleware(req, res, next), deleteAccount)

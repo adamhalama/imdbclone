@@ -110,6 +110,12 @@ const User = () => {
             <span>Friends:</span>
             <Friends friends={friends} />
         </Details>
+        <Details>
+            Toplist:
+            {
+                toplist.map(({ id, name }) => <span key={id}>{name}</span>)
+            }
+        </Details>
         <Buttons>
             <Row>
                 <Button label="Sign out" onClick={onSignOut}/>

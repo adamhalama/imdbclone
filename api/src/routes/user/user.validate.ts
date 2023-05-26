@@ -41,6 +41,12 @@ export const changePassword = (email: string, previousPassword: string, newPassw
 export const changeUsername = (email: string, username: string) => {
     if (!isValidEmail(email)) return USER_VALIDATION_ERRORS.INVALID_EMAIL
     if (!isValidUsername(username)) return USER_VALIDATION_ERRORS.INVALID_USERNAME
+    return null;
+}
+
+export const toplist = (email: string) => {
+    if (!isValidEmail) return USER_VALIDATION_ERRORS.INVALID_EMAIL
+    return null;
 }
 
 const isValidUsername = (username: string) => username && username.length > 2 && username.length < 16
