@@ -1,8 +1,9 @@
 import { instance } from "../../axios.config"
+import logger from "../../logging/logger"
 
 const useLogin = (email: string, password: string) => {
     return async () => {
-        const { data } = await instance({
+        const response = await instance({
             method: 'POST',
             url: '/user/login',
             data: {
@@ -10,7 +11,8 @@ const useLogin = (email: string, password: string) => {
                 password
             }
         })
-        return data
+        logger(response)
+        return response.data
     }
 }
 
