@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import useNotify from '../notification/use-notify';
 import { Movie } from '../../types';
 import { instance } from '../../axios.config';
-import logger from '../../logging/logger';
+import logger from '../dev/logger';
 
 export type MoviesContextState = {
   movies: Movie[];

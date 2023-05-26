@@ -12,7 +12,7 @@ import Input from "../inputs/input";
 import useAddFriend from "./use-add-friend";
 import useChangePassword from "./use-change-password";
 import useChangeUsername from "./use-change-username";
-import logger from "../../logging/logger";
+import logger from "../dev/logger";
 
 const User = () => {
     const [user, setUser] = useContext(UserContext)

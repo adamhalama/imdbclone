@@ -6,7 +6,7 @@ import { UserContext } from '../user/user.context'
 import { Row } from '../../styled/flex'
 import useMovies from './use-movies'
 import { useNavigate } from 'react-router-dom'
-import logger from '../../logging/logger'
+import logger from '../dev/logger'
 
 type Props = {
     movieId: number

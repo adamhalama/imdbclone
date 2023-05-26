@@ -6,7 +6,7 @@ import { Row } from "../../styled/flex"
 import { UserContext } from "./user.context"
 import useRemoveFriend from "./use-remove-friend"
 import useNotify from "../notification/use-notify"
-import logger from "../../logging/logger"
+import logger from "../dev/logger"
 
 
 type Props = {

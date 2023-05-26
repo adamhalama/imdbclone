@@ -8,7 +8,7 @@ import { UserContext } from "../user/user.context";
 import useLogin from "./use-login";
 import useNotify from "../notification/use-notify";
 import { useNavigate } from "react-router-dom";
-import logger from "../../logging/logger";
+import logger from "../dev/logger";
 
 const Login = () => {
 

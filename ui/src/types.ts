@@ -10,6 +10,7 @@ export type Movie = {
     director: string
     image: string
     genre: string
+    year: number
     actors: string[],
     ratings: number[],
     comments: Comment[]

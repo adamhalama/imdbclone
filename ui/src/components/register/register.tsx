@@ -9,7 +9,7 @@ import useRegister from "./use-register";
 import useNotify from "../notification/use-notify";
 import { useNavigate } from "react-router-dom";
 import User from "../user/user";
-import logger from "../../logging/logger";
+import logger from "../dev/logger";
 
 const Register = () => {
     

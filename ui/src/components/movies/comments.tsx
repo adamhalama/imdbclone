@@ -11,7 +11,7 @@ import Comment from './comment'
 import Input from '../inputs/input'
 import getValue from '../inputs/getValue'
 import Button from '../inputs/button'
-import logger from '../../logging/logger'
+import logger from '../dev/logger'
 
 type Props = {
     movieId: number

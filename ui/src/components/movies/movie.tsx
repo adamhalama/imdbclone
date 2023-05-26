@@ -12,7 +12,7 @@ import Comments from './comments'
 import Button from '../inputs/button'
 import { UserContext } from '../user/user.context'
 import useToplist from '../user/use-toplist'
-import logger from '../../logging/logger'
+import logger from '../dev/logger'
 
 type Props = {
     initialMovie: MovieType
@@ -20,7 +20,7 @@ type Props = {
 
 const Movie = ({ initialMovie }: Props) => {
 
-    const { id, name, description, director, ratings, actors, genre, comments } = initialMovie
+    const { id, name, description, director, ratings, actors, genre, comments, year } = initialMovie
 
     const [user, setUser] = useContext(UserContext)
 
@@ -82,6 +82,7 @@ const Movie = ({ initialMovie }: Props) => {
                 <MovieDetail title='Director' detail={director} />
                 <MovieDetail title='Genre' detail={genre} />
                 <MovieDetail title='Actors' detail={actors.join(", ")} />
+                <MovieDetail title='year' detail={year.toString()} />
                 <MovieDetail title='Average rating (out of 5)' detail={ratings.length > 0 ? getAvg(ratings).toString() : "No ratings yet"} />
                 <Rating movieId={id} />
                 {getToplistButton()}
