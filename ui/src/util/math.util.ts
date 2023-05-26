@@ -1,1 +1,1 @@
-export const getAvg = (arr: number[]) => arr.reduce((a,b) => (a+b)) / arr.length
+export const getAvgRating = (arr: number[]) => arr.length === 0 ? 'No ratings yet' : arr.reduce((a,b) => (a+b)) / arr.length

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import logger from './components/dev/logger'
 
 export const instance = axios.create({
     baseURL: process.env.REACT_APP_SERVICE_URL,
@@ -7,11 +8,11 @@ export const instance = axios.create({
 })
 
 instance.interceptors.request.use(request => {
-    console.log(`Starting request: ${JSON.stringify(request, null, 2)}`, {baseURL: process.env.REACT_APP_SERVICE_URL})
+    logger(`Starting request: ${JSON.stringify(request, null, 2)}`)
     return request
 })
 
 instance.interceptors.response.use(response => {
-    console.log(`Response: ${JSON.stringify(response, null, 2)}`)
+    logger(`Response: ${JSON.stringify(response, null, 2)}`)
     return response
 })

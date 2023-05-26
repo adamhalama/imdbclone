@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Column } from '../../styled/flex'
 import Input from '../inputs/input'
 import useMovies from '../movies/use-movies'
-import { getAvg } from '../../util/math.util'
+import { getAvgRating } from '../../util/math.util'
 import { DateTime } from 'luxon'
 import getValue from '../inputs/getValue'
 
@@ -25,7 +25,7 @@ const Statistics = () => {
         <Statistic>
             Average rating of all movies that an actor has played in <br />
             <Input value={actor} onChange={(actor) => setActor(actor)} label='Input actor' />
-            Result: {moviesByActor.length === 0 ? 'No ratings yet' : getAvg(moviesByActor.flatMap(({ ratings }) => ratings))}
+            Result: {moviesByActor.length === 0 ? 'No ratings yet' : getAvgRating(moviesByActor.flatMap(({ ratings }) => ratings))}
         </Statistic>
         <Statistic>
             Average rating of all movies in a specific decade <br /><br />
@@ -33,7 +33,7 @@ const Statistics = () => {
             <select value={decade} onChange={(decade) => setDecade(parseInt(getValue(decade)))}> 
                 {getDecades(1950).map(decade => <option key={decade} value={decade}>{decade}</option>)}
             </select>
-            Result: {moviesByDecade.length === 0 ? 'No ratings yet' : getAvg(moviesByDecade.flatMap(({ ratings }) => ratings))}
+            Result: {moviesByDecade.length === 0 ? 'No ratings yet' : getAvgRating(moviesByDecade.flatMap(({ ratings }) => ratings))}
         </Statistic>
     </Container>
 }

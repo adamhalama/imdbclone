@@ -6,7 +6,7 @@ import useMovieImage from './use-movie-image'
 import useNotify from '../notification/use-notify'
 import placeholder from "./placeholder.jpg"
 import MovieDetail from './movie-detail'
-import { getAvg } from '../../util/math.util'
+import { getAvgRating } from '../../util/math.util'
 import Rating from './rating'
 import Comments from './comments'
 import Button from '../inputs/button'
@@ -83,7 +83,7 @@ const Movie = ({ initialMovie }: Props) => {
                 <MovieDetail title='Genre' detail={genre} />
                 <MovieDetail title='Actors' detail={actors.join(", ")} />
                 <MovieDetail title='year' detail={year.toString()} />
-                <MovieDetail title='Average rating (out of 5)' detail={ratings.length > 0 ? getAvg(ratings).toString() : "No ratings yet"} />
+                <MovieDetail title='Average rating (out of 5)' detail={ratings.length > 0 ? getAvgRating(ratings).toString() : "No ratings yet"} />
                 <Rating movieId={id} />
                 {getToplistButton()}
             </DetailsColumn>
