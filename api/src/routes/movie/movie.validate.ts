@@ -1,12 +1,12 @@
 import { Comment, Rating } from "@prisma/client";
 import { DateTime } from "luxon";
 
-const COMMENT_VALIDATION_ERRORS = Object.freeze({
+export const COMMENT_VALIDATION_ERRORS = Object.freeze({
     INVALID_COMMENT: "Comments must be between 3 and 500 characters.",
     INVALID_DATE: "Date must be valid.",
 })
 
-const RATING_VALIDATION_ERRORS = Object.freeze({
+export const RATING_VALIDATION_ERRORS = Object.freeze({
     INVALID_RATING: "Rating must be an integer between 1 and 5."
 })
 

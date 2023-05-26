@@ -1,5 +1,6 @@
 **/.DS_STORE
 **/.env 
+**/.env.test
 **/.vscode
 **/node_modules
 **/.idea

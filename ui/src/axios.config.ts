@@ -12,6 +12,6 @@ instance.interceptors.request.use(request => {
 })
 
 instance.interceptors.response.use(response => {
-    console.log(`Starting request: ${JSON.stringify(response, null, 2)}`)
+    console.log(`Response: ${JSON.stringify(response, null, 2)}`)
     return response
 })

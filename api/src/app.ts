@@ -5,13 +5,8 @@ import { userRouter } from './routes/user/user.route';
 import { HTTP_STATUS_CODES } from './types';
 import cors from 'cors'
 import { movieRouter } from './routes/movie/movie.route';
-import log from './logging/log';
 
-dotenv.config()
-
-const PORT = process.env.PORT
-
-const app = express()
+export const app = express()
 
 app.use(cors())
 
@@ -25,11 +20,5 @@ app.use('/user', userRouter)
 app.use('/movie', movieRouter)
     
 app.use('/', (_, res) => res.status(HTTP_STATUS_CODES.NOT_FOUND).json({ data: null, errors: "Route not found" }))
-
-app.listen(PORT, () => {
-    log(`Application is ready on port ${PORT}`, 'info')
-})
-
-
 
 export default app
