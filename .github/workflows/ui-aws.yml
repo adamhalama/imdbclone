@@ -53,7 +53,7 @@ jobs:
   deploy:
 
 # BUILD:
-    name: Transpile
+    name: Build & Deploy
     runs-on: ubuntu-latest
     environment: production
 
@@ -75,12 +75,6 @@ jobs:
       run: yarn build
 
 # DEPLOY:
-
-    - name: Print $REACT_APP_SERVICE_URL
-      env: 
-        REACT_APP_SERVICE_URL: ${{ vars.REACT_APP_SERVICE_URL }}
-      run: echo $REACT_APP_SERVICE_URL
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -101,6 +95,7 @@ jobs:
         REACT_APP_SERVICE_URL: ${{ vars.REACT_APP_SERVICE_URL }}
         REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}
         REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
+        REACT_APP_ENV: ${{ vars.REACT_APP_ENV }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
@@ -109,6 +104,7 @@ jobs:
           --build-arg REACT_APP_SERVICE_URL=$REACT_APP_SERVICE_URL \
           --build-arg REACT_APP_AUTH_API_KEY=$REACT_APP_AUTH_API_KEY \
           --build-arg REACT_APP_TMDB_API_KEY=$REACT_APP_TMDB_API_KEY \
+          --build-arg REACT_APP_ENV=$REACT_APP_ENV \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
