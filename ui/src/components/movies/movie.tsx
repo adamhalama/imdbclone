@@ -84,6 +84,7 @@ const Movie = ({ initialMovie }: Props) => {
                 <MovieDetail title='Actors' detail={actors.join(", ")} />
                 <MovieDetail title='year' detail={year.toString()} />
                 <MovieDetail title='Average rating (out of 5)' detail={ratings.length > 0 ? getAvgRating(ratings).toString() : "No ratings yet"} />
+                <MovieDetail title='Amount of votes' detail={ratings?.length.toString()} />
                 <Rating movieId={id} />
                 {getToplistButton()}
             </DetailsColumn>

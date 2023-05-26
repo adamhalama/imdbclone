@@ -68,6 +68,20 @@ export const register = async (email: string, username: string, password: string
 }
 
 export const deleteAccount = async (email: string): Promise<void> => {
+    await client.comment.deleteMany({
+        where: {
+            user: {
+                email
+            }
+        }
+    })
+    await client.rating.deleteMany({
+        where: {
+            user: {
+                email
+            }
+        }
+    })
     await client.user.delete({ where: { email } })
 }
 
