@@ -7,11 +7,11 @@ export const instance = axios.create({
 })
 
 instance.interceptors.request.use(request => {
-    console.log(`Starting request: ${JSON.stringify(request, null, 2)}`)
+    console.log(`Starting request: ${JSON.stringify(request, null, 2)}`, {baseURL: process.env.REACT_APP_SERVICE_URL})
     return request
 })
 
 instance.interceptors.response.use(response => {
-    console.log(`Starting request: ${JSON.stringify(response, null, 2)}`)
+    console.log(`Starting response: ${JSON.stringify(response, null, 2)}`, {baseURL: process.env.REACT_APP_SERVICE_URL})
     return response
 })
