@@ -2,7 +2,7 @@ import { instance } from "../../axios.config"
 
 const useLogin = (email: string, password: string) => {
     return async () => {
-        const { data } = await instance({
+        const response = await instance({
             method: 'POST',
             url: '/user/login',
             data: {
@@ -10,7 +10,7 @@ const useLogin = (email: string, password: string) => {
                 password
             }
         })
-        return data
+        return response.data
     }
 }
 
