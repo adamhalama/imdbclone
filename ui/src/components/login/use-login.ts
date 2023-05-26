@@ -1,5 +1,5 @@
 import { instance } from "../../axios.config"
-import logger from "../../logging/logger"
+import logger from "../dev/logger"
 
 const useLogin = (email: string, password: string) => {
     return async () => {
