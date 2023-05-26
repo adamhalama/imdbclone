@@ -72,6 +72,11 @@ jobs:
     - name: Install dependencies
       run: yarn install --frozen-lockfile
     - name: Create optimized production build
+      env:
+        REACT_APP_SERVICE_URL: ${{ vars.REACT_APP_SERVICE_URL }}
+        REACT_APP_AUTH_API_KEY: ${{ secrets.REACT_APP_AUTH_API_KEY }}
+        REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
+        REACT_APP_ENV: ${{ vars.REACT_APP_ENV }}
       run: yarn build
 
 # DEPLOY:
