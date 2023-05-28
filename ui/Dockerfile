@@ -1,6 +1,7 @@
-# Stage 2: Serve the React app using serve
 FROM --platform=linux/amd64 node:16 as runtime
 WORKDIR /usr/src/app
+
+# This dockerfile relies on the application already being built
 
 # Root
 COPY ./package.json ./package.json

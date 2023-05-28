@@ -1,5 +1,7 @@
 FROM --platform=linux/amd64 node:16 as runtime
 
+# This dockerfile relies on the application already being built
+
 WORKDIR /usr/src/app
 
 # Root
