@@ -54,7 +54,7 @@ jobs:
 
 # BUILD:
 
-    name: Transpile
+    name: Test, Build & Deploy
     runs-on: ubuntu-latest
     environment: production
 

@@ -53,7 +53,7 @@ jobs:
   deploy:
 
 # BUILD:
-    name: Build & Deploy
+    name: Test, Build & Deploy
     runs-on: ubuntu-latest
     environment: production
 
@@ -106,11 +106,11 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         docker build \
-          --build-arg REACT_APP_SERVICE_URL=$REACT_APP_SERVICE_URL \
-          --build-arg REACT_APP_AUTH_API_KEY=$REACT_APP_AUTH_API_KEY \
-          --build-arg REACT_APP_TMDB_API_KEY=$REACT_APP_TMDB_API_KEY \
-          --build-arg REACT_APP_ENV=$REACT_APP_ENV \
-          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+            --build-arg REACT_APP_SERVICE_URL=$REACT_APP_SERVICE_URL \
+            --build-arg REACT_APP_AUTH_API_KEY=$REACT_APP_AUTH_API_KEY \
+            --build-arg REACT_APP_TMDB_API_KEY=$REACT_APP_TMDB_API_KEY \
+            --build-arg REACT_APP_ENV=$REACT_APP_ENV \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
