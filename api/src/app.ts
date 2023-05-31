@@ -12,7 +12,7 @@ app.use(cors())
 
 app.use(express.json())
 
-app.use('/health', (_, res) => res.status(HTTP_STATUS_CODES.OK).json("Service is healthy!!"))
+app.use('/health', (_, res) => res.status(HTTP_STATUS_CODES.OK).json("Service is healthy! Demonstration!"))
 
 app.use('/', (req, res, next) => tokenMiddleware(req, res, next))
 
